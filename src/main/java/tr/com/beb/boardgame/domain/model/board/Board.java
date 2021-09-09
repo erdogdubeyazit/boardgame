@@ -3,6 +3,7 @@ package tr.com.beb.boardgame.domain.model.board;
 import tr.com.beb.boardgame.domain.model.Player;
 import tr.com.beb.boardgame.domain.model.board.impl.SimplePitImpl;
 import tr.com.beb.boardgame.domain.model.board.impl.TankImpl;
+import tr.com.beb.boardgame.domain.model.game.InvalidPitIndexException;
 
 public class Board {
 
@@ -49,7 +50,9 @@ public class Board {
         return pits;
     }
 
-    public Pit getOppositePit(int pitIndex) {
+    public Pit getOppositePit(int pitIndex) throws InvalidPitIndexException {
+        if (pits[pitIndex] instanceof Tank || pits[pits.length - pitIndex - 2] instanceof Tank)
+            throw new InvalidPitIndexException("This pit index refers to a tank");
         return pits[pits.length - pitIndex - 2];
     }
 

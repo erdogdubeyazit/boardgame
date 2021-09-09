@@ -105,7 +105,7 @@ public class Game {
         return player == Player.A ? Player.B : Player.A;
     }
 
-    private void collectOwnAndOppositePitsIntoOwnTank(int ownPitIndex) {
+    private void collectOwnAndOppositePitsIntoOwnTank(int ownPitIndex) throws InvalidPitIndexException {
         SimplePit ownPit = (SimplePit) board.getPits()[ownPitIndex];
         SimplePit oppositePit = (SimplePit) board.getOppositePit(ownPitIndex);
 
