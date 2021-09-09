@@ -164,7 +164,7 @@ public class GameTest {
     }
 
     @Test(expected = InvalidPitIndexException.class)
-    public void playing_with_oponent_pit_should_fail() throws Exception {
+    public void playing_with_opponent_pit_should_fail() throws Exception {
         Game game = new Game(6, 6);
         game.play(7);
     }
