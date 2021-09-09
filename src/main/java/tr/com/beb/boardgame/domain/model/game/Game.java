@@ -24,43 +24,41 @@ public class Game {
             throw new GameAlreadyFinishedException();
 
         Pit[] pits = board.getPits();
-        if (pitIndex >= pits.length)
+        if (pitIndex < 0 || pits[pitIndex] instanceof Tank || pits[pitIndex].getPlayer() != currentPlayer
+                || pitIndex >= pits.length)
             throw new InvalidPitIndexException("Pit index is out of bounds");
 
+        int actualPitIndex = (board.getPitCount() + 1) * currentPlayer.getCode() + pitIndex;
         // SimplePit startPit = (SimplePit)
-        SimplePit startPit = (SimplePit) pits[(board.getPitCount() + 1) * currentPlayer.getCode() + pitIndex];
+        SimplePit startPit = (SimplePit) pits[actualPitIndex];
 
         int itemsToProcess = startPit.collectItems();
 
         if (itemsToProcess == 0)
             throw new PitEmptyException();
 
-        int actualPitIndex = (board.getPitCount() + 1) * currentPlayer.getCode() + pitIndex;
-
         if (pits[actualPitIndex] instanceof Tank)
             throw new InvalidPitIndexException("This index refers to a tank");
 
-        Pit actualPit = pits[(actualPitIndex) % (pits.length)];
+        Pit actualPit = (Pit) startPit;
         while (itemsToProcess > 0) {
-            boolean addItemResult = actualPit.addItem(currentPlayer);
+            int nextPitIndex = (actualPitIndex + 1) % (pits.length);
+            Pit nextPit = pits[nextPitIndex];
+            boolean addItemResult = nextPit.addItem(currentPlayer);
             if (addItemResult)
                 itemsToProcess--;
-            actualPitIndex = (actualPitIndex + 1) % (pits.length);
-            actualPit = pits[(actualPitIndex) % (pits.length)];
+
+            actualPitIndex = nextPitIndex;
+            actualPit = nextPit;
         }
 
-        // Get last processed indexx and pit
-        int lastProcessedIndex = (pits.length + actualPitIndex - 1) % (pits.length);
-        Pit lastProcessedPit = pits[lastProcessedIndex];
-
         Player nextPlayer = currentPlayer;
-        if (!(lastProcessedPit instanceof Tank))
+        if (!(actualPit instanceof Tank))
             nextPlayer = changePlayer(currentPlayer);
 
-        if (lastProcessedPit instanceof SimplePit && lastProcessedPit.getPlayer() == currentPlayer
-                && lastProcessedPit.getItemCount() == 1) {
-            int ownPitIndex = lastProcessedIndex - (board.getPitCount() + 1) * currentPlayer.getCode();
-            collectOwnAndOppositePitsIntoTank(ownPitIndex);
+        if (actualPit instanceof SimplePit && actualPit.getPlayer() == currentPlayer && actualPit.getItemCount() == 1) {
+            int ownPitIndex = actualPitIndex - (board.getPitCount() + 1) * currentPlayer.getCode();
+            collectOwnAndOppositePitsIntoOwnTank(ownPitIndex);
         }
 
         if (playerOutOfItems(currentPlayer)) {
@@ -107,7 +105,7 @@ public class Game {
         return player == Player.A ? Player.B : Player.A;
     }
 
-    private void collectOwnAndOppositePitsIntoTank(int ownPitIndex) {
+    private void collectOwnAndOppositePitsIntoOwnTank(int ownPitIndex) {
         SimplePit ownPit = (SimplePit) board.getPits()[ownPitIndex];
         SimplePit oppositePit = (SimplePit) board.getOppositePit(ownPitIndex);
 
@@ -135,6 +133,30 @@ public class Game {
 
         tank.addItems(sum);
 
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus = gameStatus;
     }
 
 }

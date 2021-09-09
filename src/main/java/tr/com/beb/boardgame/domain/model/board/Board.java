@@ -50,7 +50,7 @@ public class Board {
     }
 
     public Pit getOppositePit(int pitIndex) {
-        return pits[pits.length - pitIndex - 1];
+        return pits[pits.length - pitIndex - 2];
     }
 
     public int getPitCount() {
