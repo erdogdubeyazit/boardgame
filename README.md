@@ -1,2 +1,0 @@
-# Erdogdu Beyazıt
-
