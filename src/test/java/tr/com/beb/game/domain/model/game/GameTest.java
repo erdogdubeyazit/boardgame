@@ -9,12 +9,14 @@ import tr.com.beb.boardgame.domain.model.Player;
 import tr.com.beb.boardgame.domain.model.board.Board;
 import tr.com.beb.boardgame.domain.model.game.Game;
 import tr.com.beb.boardgame.domain.model.game.GameAlreadyFinishedException;
+import tr.com.beb.boardgame.domain.model.game.GameNotFinishedYetException;
 import tr.com.beb.boardgame.domain.model.game.GameStatus;
 import tr.com.beb.boardgame.domain.model.game.InvalidPitIndexException;
 import tr.com.beb.boardgame.domain.model.game.PitEmptyException;
 import tr.com.beb.boardgame.domain.model.game.Winner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -133,12 +135,48 @@ public class GameTest {
             assertEquals(Player.A, winner.getPlayer());
             assertEquals(36, winner.getPoints());
 
-        } catch (PitEmptyException | GameAlreadyFinishedException | InvalidPitIndexException e) {
+        } catch (PitEmptyException | GameAlreadyFinishedException | InvalidPitIndexException
+                | GameNotFinishedYetException e) {
             e.printStackTrace();
             ex = e;
         }
         assertEquals(null, ex);
 
+    }
+
+    @Test
+    public void test_tie() {
+
+        Exception ex = null;
+        try {
+            Game game = new Game(6, 6);
+            Board board = game.getBoard();
+            for (int i = 0; i < 5; i++)
+                board.getPits()[i].setItemCount(0);
+
+            board.getPits()[5].setItemCount(1);
+            board.getPlayerTank(Player.A).addItems(35);
+
+            game.play(5);
+
+            assertEquals(GameStatus.COMPLETED, game.getGameStatus());
+            Winner winner = game.getWinner();
+
+            assertNull(winner);
+
+        } catch (PitEmptyException | GameAlreadyFinishedException | InvalidPitIndexException
+                | GameNotFinishedYetException e) {
+            e.printStackTrace();
+            ex = e;
+        }
+        assertEquals(null, ex);
+
+    }
+
+    @Test(expected = GameNotFinishedYetException.class)
+    public void getWinner_with_uncompleted_game_should_fail() throws Exception {
+        Game game = new Game(6, 6);
+        game.getWinner();
     }
 
     @Test(expected = GameAlreadyFinishedException.class)

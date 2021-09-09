@@ -69,7 +69,9 @@ public class Game {
 
     }
 
-    public Winner getWinner() {
+    public Winner getWinner() throws GameNotFinishedYetException {
+        if (gameStatus != GameStatus.COMPLETED)
+            throw new GameNotFinishedYetException();
         Pit tankA = (Pit) board.getPlayerTank(Player.A);
         Pit tankB = (Pit) board.getPlayerTank(Player.B);
 
@@ -80,12 +82,14 @@ public class Game {
         if (itemCountA > itemCountB) {
             winner.setPlayer(Player.A);
             winner.setPoints(itemCountA);
-        } else {
+            return winner;
+        } else if (itemCountA < itemCountB) {
             winner.setPlayer(Player.B);
             winner.setPoints(itemCountB);
-        }
+            return winner;
+        } else
+            return null;
 
-        return winner;
     }
 
     private void closeGame() {
