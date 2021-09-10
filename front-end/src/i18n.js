@@ -5,8 +5,8 @@ import { en } from './locale'
 Vue.use(VueI18n)
 
 export const i18n = new VueI18n({
-    locale: 'en',
-    messages: {
-        'en': en
-    }
+  locale: 'en',
+  messages: {
+    en: en
+  }
 })

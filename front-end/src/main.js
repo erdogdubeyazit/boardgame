@@ -7,6 +7,8 @@ import axios from 'axios'
 
 import { i18n } from './i18n'
 
+import Vuelidate from 'vuelidate'
+
 // Bootstrap axios
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.common.Accept = 'application/json'
@@ -16,9 +18,7 @@ axios.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
-import Vuelidate from 'vuelidate'  
-Vue.use(Vuelidate)  
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
 
