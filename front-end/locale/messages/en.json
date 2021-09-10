@@ -1,0 +1,62 @@
+{
+    "logo": {
+      "tagLine": "Beyazit Board Game"
+    },
+    "header": {
+      "profile": "Profile",
+      "signOut": "Sign Out"
+    },
+    "loginPage": {
+      "form": {
+        "username": {
+          "label": "User name",
+          "required": "User name is required"
+        },
+        "password": {
+          "label": "Password",
+          "required": "Password is required"
+        },
+        "submit": "Sign in",
+        "noAccountYet": "Don't have an account?",
+        "signUpHere": "Sign up here"
+      }
+    },
+    "registerPage": {
+      "form": {
+        "username": {
+          "label": "User name",
+          "required": "User name is required",
+          "minLength": "User name must have at least {minLength} characters.",
+          "maxLength": "User name must be at most {maxLength} characters."
+        },
+        "password": {
+          "label": "Password",
+          "required": "Password is required",
+          "minLength": "Password must be at least {minLength} characters.",
+          "maxLength": "Password must be at most {maxLength} characters."
+        },
+        "submit": "Create account",
+        "alreadyHaveAccount": "Already have an account?",
+        "signIn": "Sign in"
+      }
+    },
+    "homePage": {
+      "openGames": "Open games",
+      "createNewGame": "Create New Game"
+    },
+    "pageFooter": {
+      "about": "About"
+    },
+    "error": {
+      "request": {
+        "bad": "Bad request",
+        "notAuthorized": "Request not authorized.",
+        "forbidden": "Request forbidden.",
+        "notFound": "Request failed. Request endpoint not found on the server.",
+        "unknownServerError": "There is an error on the server side. Please try again later.",
+        "failed": "Request failed. Please try again later.",
+        "noResponse": "Request failed. No response from the server."
+      }
+    }
+  }
+  
