@@ -9,6 +9,9 @@ import { i18n } from './i18n'
 
 import Vuelidate from 'vuelidate'
 
+import eventBus from './event-bus'
+import webSocketClient from '@/websocket-client'
+
 // Bootstrap axios
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.common.Accept = 'application/json'
@@ -21,6 +24,9 @@ axios.interceptors.response.use(
 Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
+
+Vue.prototype.$bus = eventBus
+Vue.prototype.$wsc = webSocketClient
 
 new Vue({
   router,
