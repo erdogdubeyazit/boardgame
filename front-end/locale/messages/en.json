@@ -4,7 +4,8 @@
     },
     "header": {
       "profile": "Profile",
-      "signOut": "Sign Out"
+      "signOut": "Sign Out",
+      "welcome": "Welcome"
     },
     "loginPage": {
       "form": {
@@ -23,11 +24,25 @@
     },
     "registerPage": {
       "form": {
-        "username": {
-          "label": "User name",
-          "required": "User name is required",
-          "minLength": "User name must have at least {minLength} characters.",
-          "maxLength": "User name must be at most {maxLength} characters."
+        "emailAddress": {
+          "label": "Email address",
+          "required": "Email address is required",
+          "email": "This is not a valid email address",
+          "maxLength": "Email address is too long. It can contains maximum {maxLength} letters."
+        },
+        "name": {
+          "label": "Name",
+          "required": "Name is required",
+          "alpha": "Name can only contain letters",
+          "minLength": "Name must have at least {minLength} letters.",
+          "maxLength": "Name is too long. It can contains maximum {maxLength} letters."
+        },
+        "surname": {
+          "label": "Surname",
+          "required": "Surname is required",
+          "alpha": "Surname can only contain letters",
+          "minLength": "Surname must have at least {minLength} letters.",
+          "maxLength": "Surname is too long. It can contains maximum {maxLength} letters."
         },
         "password": {
           "label": "Password",
