@@ -15,7 +15,7 @@ public class ApplicationProperties {
     private String tokenSecretKey;
 
     @NotBlank
-    private String webSocketServerAddress;
+    private String webSocketServerUrl;
 
     public String getTokenSecretKey() {
         return tokenSecretKey;
@@ -25,12 +25,12 @@ public class ApplicationProperties {
         this.tokenSecretKey = tokenSecretKey;
     }
 
-    public String getWebSocketServerAddress() {
-        return webSocketServerAddress;
+    public String getWebSocketServerUrl() {
+        return webSocketServerUrl;
     }
 
-    public void setWebSocketServerAddress(String webSocketServerAddress) {
-        this.webSocketServerAddress = webSocketServerAddress;
+    public void setWebSocketServerUrl(String webSocketServerUrl) {
+        this.webSocketServerUrl = webSocketServerUrl;
     }
 
 }
