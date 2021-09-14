@@ -8,7 +8,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import tr.com.beb.boardgame.domain.model.Player;
 import tr.com.beb.boardgame.domain.model.board.Board;
 import tr.com.beb.boardgame.domain.model.game.Game;
-import tr.com.beb.boardgame.domain.model.game.GameAlreadyFinishedException;
+import tr.com.beb.boardgame.domain.model.game.GameIsNotPlayableException;
 import tr.com.beb.boardgame.domain.model.game.GameNotFinishedYetException;
 import tr.com.beb.boardgame.domain.model.game.GameStatus;
 import tr.com.beb.boardgame.domain.model.game.InvalidPitIndexException;
@@ -16,6 +16,7 @@ import tr.com.beb.boardgame.domain.model.game.PitEmptyException;
 import tr.com.beb.boardgame.domain.model.game.Winner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class GameTest {
             assertEquals(0, board.getPits()[0].getItemCount());
             for (int i = 1; i <= 5; i++)
                 assertEquals(7, board.getPits()[i].getItemCount());
-        } catch (PitEmptyException | GameAlreadyFinishedException | InvalidPitIndexException e) {
+        } catch (PitEmptyException | GameIsNotPlayableException | InvalidPitIndexException e) {
             e.printStackTrace();
             ex = e;
         }
@@ -59,7 +60,7 @@ public class GameTest {
             assertEquals(0, board.getPits()[13].getItemCount());
             assertEquals(10, board.getPits()[0].getItemCount());
 
-        } catch (PitEmptyException | GameAlreadyFinishedException | InvalidPitIndexException e) {
+        } catch (PitEmptyException | GameIsNotPlayableException | InvalidPitIndexException e) {
             e.printStackTrace();
             ex = e;
         }
@@ -82,7 +83,7 @@ public class GameTest {
             assertEquals(7, board.getPits()[6].getItemCount());
             assertEquals(0, board.getOppositePit(1).getItemCount());
 
-        } catch (PitEmptyException | GameAlreadyFinishedException | InvalidPitIndexException e) {
+        } catch (PitEmptyException | GameIsNotPlayableException | InvalidPitIndexException e) {
             e.printStackTrace();
             ex = e;
         }
@@ -103,7 +104,7 @@ public class GameTest {
             game.play(1);
             assertEquals(Player.B, game.getCurrentPlayer());
 
-        } catch (PitEmptyException | GameAlreadyFinishedException | InvalidPitIndexException e) {
+        } catch (PitEmptyException | GameIsNotPlayableException | InvalidPitIndexException e) {
             e.printStackTrace();
             ex = e;
         }
@@ -135,7 +136,7 @@ public class GameTest {
             assertEquals(Player.A, winner.getPlayer());
             assertEquals(36, winner.getPoints());
 
-        } catch (PitEmptyException | GameAlreadyFinishedException | InvalidPitIndexException
+        } catch (PitEmptyException | GameIsNotPlayableException | InvalidPitIndexException
                 | GameNotFinishedYetException e) {
             e.printStackTrace();
             ex = e;
@@ -164,7 +165,7 @@ public class GameTest {
 
             assertNull(winner);
 
-        } catch (PitEmptyException | GameAlreadyFinishedException | InvalidPitIndexException
+        } catch (PitEmptyException | GameIsNotPlayableException | InvalidPitIndexException
                 | GameNotFinishedYetException e) {
             e.printStackTrace();
             ex = e;
@@ -179,13 +180,59 @@ public class GameTest {
         game.getWinner();
     }
 
-    @Test(expected = GameAlreadyFinishedException.class)
-    public void playing_with_closed_game_should_fail() throws Exception {
-        Game game = new Game(6, 6);
-        game.setGameStatus(GameStatus.COMPLETED);
-        game.play(0);
-        game.setGameStatus(GameStatus.INTERRUPTED);
-        game.play(0);
+    @Test
+    public void playing_with_unplayable_game_should_fail() {
+
+        try {
+            Game game = new Game(6, 6);
+            game.setGameStatus(GameStatus.CREATED);
+            game.play(0);
+        } catch (GameIsNotPlayableException e) {
+            assertNotNull(e, "GameIsNotPlayableException should be thrown");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Game game = new Game(6, 6);
+            game.setGameStatus(GameStatus.CANCELLED);
+            game.play(0);
+        } catch (GameIsNotPlayableException e) {
+            assertNotNull(e, "GameIsNotPlayableException should be thrown");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Game game = new Game(6, 6);
+            game.setGameStatus(GameStatus.STARTED);
+            game.play(0);
+        } catch (GameIsNotPlayableException e) {
+            assertNull(e, "No should be thrown");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Game game = new Game(6, 6);
+            game.setGameStatus(GameStatus.COMPLETED);
+            game.play(0);
+        } catch (GameIsNotPlayableException e) {
+            assertNotNull(e, "GameIsNotPlayableException should be thrown");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Game game = new Game(6, 6);
+            game.setGameStatus(GameStatus.INTERRUPTED);
+            game.play(0);
+        } catch (GameIsNotPlayableException e) {
+            assertNotNull(e, "GameIsNotPlayableException should be thrown");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test(expected = InvalidPitIndexException.class)
