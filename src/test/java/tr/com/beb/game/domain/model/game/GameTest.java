@@ -29,6 +29,7 @@ public class GameTest {
 
     @Test
     public void simple_move_should_succeed() {
+
         Exception ex = null;
         try {
             Game game = new Game(6, 6);
