@@ -14,14 +14,14 @@ public class Game {
 
     public Game(int pitCount, int itemsPerPit) {
         this.board = new Board(pitCount, itemsPerPit);
-        gameStatus = GameStatus.OPEN;
+        gameStatus = GameStatus.STARTED;
         currentPlayer = Player.A;
     }
 
-    public void play(int pitIndex) throws PitEmptyException, GameAlreadyFinishedException, InvalidPitIndexException {
+    public void play(int pitIndex) throws PitEmptyException, GameIsNotPlayableException, InvalidPitIndexException {
 
-        if (gameStatus != GameStatus.OPEN)
-            throw new GameAlreadyFinishedException();
+        if (gameStatus != GameStatus.STARTED)
+            throw new GameIsNotPlayableException();
 
         Pit[] pits = board.getPits();
         if (pitIndex < 0 || pits[pitIndex] instanceof Tank || pits[pitIndex].getPlayer() != currentPlayer
