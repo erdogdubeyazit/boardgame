@@ -3,8 +3,6 @@ package tr.com.beb.boardgame.web.payload;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import tr.com.beb.boardgame.domain.application.commands.RegistrationCommand;
-
 public class RegistrationPayload {
 
     @NotBlank
@@ -22,10 +20,6 @@ public class RegistrationPayload {
     @NotBlank
     @Size(min = 6, max = 30)
     private String password;
-
-    public RegistrationCommand toCommand() {
-        return new RegistrationCommand(username, password, name, surname);
-    }
 
     public String getUsername() {
         return username;

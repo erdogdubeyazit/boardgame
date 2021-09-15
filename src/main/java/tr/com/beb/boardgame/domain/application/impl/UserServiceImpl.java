@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.lang.Assert;
 import tr.com.beb.boardgame.domain.application.UserService;
-import tr.com.beb.boardgame.domain.application.commands.RegistrationCommand;
 import tr.com.beb.boardgame.domain.model.user.DefaultUserDetails;
 import tr.com.beb.boardgame.domain.model.user.RegistrationException;
 import tr.com.beb.boardgame.domain.model.user.User;
@@ -58,20 +57,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(RegistrationCommand command) throws RegistrationException {
-        Assert.notNull(command, "Parameter `command` must not be null");
+    public void register(String username, String password, String name, String surname) throws RegistrationException {
+        Assert.hasText(username, "Parameter `username` must not be empty");
+        Assert.hasText(password, "Parameter `password` must not be empty");
+        Assert.hasText(name, "Parameter `name` must not be empty");
+        Assert.hasText(surname, "Parameter `surname` must not be empty");
 
-        Optional<UserEntity> existingUserEntity = userRepository.findByUsername(command.getUsername());
+        Optional<UserEntity> existingUserEntity = userRepository.findByUsername(username);
         if (existingUserEntity.isPresent())
-            throw new UsernameExistsException(
-                    String.format("User with name `%s` already exists.", command.getUsername()));
+            throw new UsernameExistsException(String.format("User with name `%s` already exists.", username));
 
         try {
-            UserEntity newUserEntity = new UserEntity(command.getUsername(),
-                    passwordEncoder.encode(command.getPassword()), command.getName(), command.getSurname());
+            UserEntity newUserEntity = new UserEntity(username, passwordEncoder.encode(password), name, surname);
             userRepository.save(newUserEntity);
         } catch (Exception e) {
-            logger.error("Registration failed at UserServiceImpl. Details: " + command.toString(), e);
+            logger.error(
+                    "Registration failed at UserServiceImpl. Details: username:{}, password:{}, name:{}, surname:{}. Error Message : "
+                            + username,
+                    password, name, surname, e.getMessage());
             throw new RegistrationException("Registration failed", e);
         }
 

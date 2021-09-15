@@ -26,7 +26,7 @@ public class RegistrationController {
     @PostMapping("/api/registrations")
     public ResponseEntity<ApiResult> register(@Valid @RequestBody RegistrationPayload payload) {
         try {
-            userService.register(payload.toCommand());
+            userService.register(payload.getUsername(), payload.getPassword(), payload.getName(), payload.getSurname());
             return Result.created();
         } catch (RegistrationException e) {
             String errorMessage = "Registration failed";
