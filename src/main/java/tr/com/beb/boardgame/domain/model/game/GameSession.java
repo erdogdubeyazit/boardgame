@@ -14,12 +14,17 @@ public class GameSession {
     private GameStatus gameStatus;
     private Integer pitCount;
     private Integer itemsPerPit;
-    private Pit[] pits;
+    private Pit[] playerAPits;
+    private Pit[] playerBPits;
+    private Pit tankA;
+    private Pit tankB;
+    
     private Winner winner;
     private int turn;
-
+    
     public GameSession(GameId gameId, UserId playerA, UserId playerB, UserId currentPlayer, GameStatus gameStatus,
-            Integer pitCount, Integer itemsPerPit, Pit[] pits, Winner winner, int turn) {
+            Integer pitCount, Integer itemsPerPit, Pit[] playerAPits, Pit[] playerBPits, Pit tankA, Pit tankB,
+            Winner winner, int turn) {
         this.gameId = gameId;
         this.playerA = playerA;
         this.playerB = playerB;
@@ -27,7 +32,10 @@ public class GameSession {
         this.gameStatus = gameStatus;
         this.pitCount = pitCount;
         this.itemsPerPit = itemsPerPit;
-        this.pits = pits;
+        this.playerAPits = playerAPits;
+        this.playerBPits = playerBPits;
+        this.tankA = tankA;
+        this.tankB = tankB;
         this.winner = winner;
         this.turn = turn;
     }
@@ -36,33 +44,54 @@ public class GameSession {
         return gameId;
     }
 
+
     public UserId getPlayerA() {
         return playerA;
     }
+
 
     public UserId getPlayerB() {
         return playerB;
     }
 
+
     public UserId getCurrentPlayer() {
         return currentPlayer;
     }
+
 
     public GameStatus getGameStatus() {
         return gameStatus;
     }
 
+
     public Integer getPitCount() {
         return pitCount;
     }
+
 
     public Integer getItemsPerPit() {
         return itemsPerPit;
     }
 
-    public Pit[] getPits() {
-        return pits;
+    public Pit[] getPlayerAPits() {
+        return playerAPits;
     }
+
+    public Pit[] getPlayerBPits() {
+        return playerBPits;
+    }
+
+
+    public Pit getTankA() {
+        return tankA;
+    }
+
+
+    public Pit getTankB() {
+        return tankB;
+    }
+
 
     public Winner getWinner() {
         return winner;
@@ -75,9 +104,13 @@ public class GameSession {
     @Override
     public String toString() {
         return "GameSession [currentPlayer=" + currentPlayer + ", gameId=" + gameId + ", gameStatus=" + gameStatus
-                + ", itemsPerPit=" + itemsPerPit + ", pitCount=" + pitCount + ", pits=" + Arrays.toString(pits)
-                + ", playerA=" + playerA + ", playerB=" + playerB + ", turn=" + turn + ", winner=" + winner + "]";
+                + ", itemsPerPit=" + itemsPerPit + ", pitCount=" + pitCount + ", playerA=" + playerA + ", playerAPits="
+                + Arrays.toString(playerAPits) + ", playerB=" + playerB + ", playerBPits="
+                + Arrays.toString(playerBPits) + ", tankA=" + tankA + ", tankB=" + tankB + ", turn=" + turn
+                + ", winner=" + winner + "]";
     }
+
+
 
     
 

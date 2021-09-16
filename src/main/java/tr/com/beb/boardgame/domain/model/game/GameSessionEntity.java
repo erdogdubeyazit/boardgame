@@ -1,5 +1,6 @@
 package tr.com.beb.boardgame.domain.model.game;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import tr.com.beb.boardgame.domain.common.model.AbstractEntity;
 import tr.com.beb.boardgame.domain.model.Player;
+import tr.com.beb.boardgame.domain.model.game.GameSessionEntity.BoardEntity.PitEntity;
+import tr.com.beb.boardgame.domain.model.board.Board;
 
 @Document(collection = "games")
 @TypeAlias("game_session")
@@ -24,7 +27,7 @@ public class GameSessionEntity extends AbstractEntity {
     private Date startTime;
     private Date endTime;
     private Player nextPlayer;
-    private List<BoardEntity> turns;
+    private List<BoardEntity> turns = new ArrayList<>();
 
     public GameSessionEntity() {
     }
@@ -42,8 +45,17 @@ public class GameSessionEntity extends AbstractEntity {
         this.startTime = startTime;
         this.endTime = endTime;
         this.nextPlayer = nextPlayer;
-        this.turns = turns;
+        this.turns = turns != null ? turns : new ArrayList<>();
         this.createdDate = new Date();
+    }
+
+    public void addTurn(Board gameBoard) {
+        List<PitEntity> pitEntities = new ArrayList<>();
+        for (int i = 0; i < gameBoard.getPits().length; i++) {
+            pitEntities.add(new PitEntity(i, gameBoard.getPits()[i].getItemCount()));
+        }
+
+        turns.add(new BoardEntity(nextPlayer, turns.size() + 1, pitEntities));
     }
 
     public Integer getPitCount() {
@@ -167,8 +179,6 @@ public class GameSessionEntity extends AbstractEntity {
         return true;
     }
 
-    
-
     @Override
     public String toString() {
         return "GameSessionEntity [createdDate=" + createdDate + ", endTime=" + endTime + ", gameStatus=" + gameStatus
@@ -176,8 +186,6 @@ public class GameSessionEntity extends AbstractEntity {
                 + ", pitCount=" + pitCount + ", playerA=" + playerA + ", playerB=" + playerB + ", startTime="
                 + startTime + ", turns=" + turns + ", winner=" + winner + "]";
     }
-
-
 
     public static class BoardEntity {
 

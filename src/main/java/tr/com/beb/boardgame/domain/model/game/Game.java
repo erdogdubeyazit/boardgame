@@ -24,11 +24,11 @@ public class Game {
             throw new GameIsNotPlayableException();
 
         Pit[] pits = board.getPits();
-        if (pitIndex < 0 || pits[pitIndex] instanceof Tank || pits[pitIndex].getPlayer() != currentPlayer
+        int actualPitIndex = (board.getPitCount() + 1) * currentPlayer.getCode() + pitIndex;
+        if (pitIndex < 0 || pits[pitIndex] instanceof Tank || pits[actualPitIndex].getPlayer() != currentPlayer
                 || pitIndex >= pits.length)
             throw new InvalidPitIndexException("Pit index is out of bounds");
 
-        int actualPitIndex = (board.getPitCount() + 1) * currentPlayer.getCode() + pitIndex;
         // SimplePit startPit = (SimplePit)
         SimplePit startPit = (SimplePit) pits[actualPitIndex];
 
@@ -41,6 +41,11 @@ public class Game {
             throw new InvalidPitIndexException("This index refers to a tank");
 
         Pit actualPit = (Pit) startPit;
+        if (itemsToProcess > 1) {
+            boolean addItemResult = actualPit.addItem(currentPlayer);
+            if (addItemResult)
+                itemsToProcess--;
+        }
         while (itemsToProcess > 0) {
             int nextPitIndex = (actualPitIndex + 1) % (pits.length);
             Pit nextPit = pits[nextPitIndex];
@@ -56,10 +61,8 @@ public class Game {
         if (!(actualPit instanceof Tank))
             nextPlayer = changePlayer(currentPlayer);
 
-        if (actualPit instanceof SimplePit && actualPit.getPlayer() == currentPlayer && actualPit.getItemCount() == 1) {
-            int ownPitIndex = actualPitIndex - (board.getPitCount() + 1) * currentPlayer.getCode();
-            collectOwnAndOppositePitsIntoOwnTank(ownPitIndex);
-        }
+        if (actualPit instanceof SimplePit && actualPit.getPlayer() == currentPlayer && actualPit.getItemCount() == 1)
+            collectOwnAndOppositePitsIntoOwnTank(actualPitIndex);
 
         if (playerOutOfItems(currentPlayer)) {
             closeGame();
