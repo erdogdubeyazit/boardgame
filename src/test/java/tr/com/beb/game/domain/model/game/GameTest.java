@@ -36,7 +36,7 @@ public class GameTest {
             game.play(0);
             Board board = game.getBoard();
 
-            assertEquals(0, board.getPits()[0].getItemCount());
+            assertEquals(1, board.getPits()[0].getItemCount());
             for (int i = 1; i <= 5; i++)
                 assertEquals(7, board.getPits()[i].getItemCount());
         } catch (PitEmptyException | GameIsNotPlayableException | InvalidPitIndexException e) {
@@ -54,7 +54,7 @@ public class GameTest {
             game.play(5);
             Board board = game.getBoard();
 
-            assertEquals(0, board.getPits()[5].getItemCount());
+            assertEquals(1, board.getPits()[5].getItemCount());
             assertEquals(1, board.getPits()[6].getItemCount());
             for (int i = 7; i <= 12; i++)
                 assertEquals(10, board.getPits()[i].getItemCount());
@@ -97,12 +97,12 @@ public class GameTest {
         Exception ex = null;
         try {
             Game game = new Game(6, 6);
-            game.play(0);
+            game.play(1);
 
             assertEquals(Player.A, game.getCurrentPlayer());
 
             game = new Game(6, 6);
-            game.play(1);
+            game.play(0);
             assertEquals(Player.B, game.getCurrentPlayer());
 
         } catch (PitEmptyException | GameIsNotPlayableException | InvalidPitIndexException e) {
