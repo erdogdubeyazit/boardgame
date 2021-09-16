@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(UserId userId) throws UserNotFoundException {
         Assert.notNull(userId, "Parameter `userId` must not be null");
+        Assert.hasText(userId.getValue(), "Parameter `userId` must not be empty");
 
         UserEntity userEntity = userRepository.findById(userId.getValue())
                 .orElseThrow(() -> new UserNotFoundException("User not found by id:" + userId.getValue()));
