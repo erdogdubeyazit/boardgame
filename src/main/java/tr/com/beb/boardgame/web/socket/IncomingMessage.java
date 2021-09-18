@@ -31,6 +31,9 @@ public class IncomingMessage {
      */
     private String payload;
 
+    public IncomingMessage() {
+    }
+
     public IncomingMessage(String channel, String action, String payload) {
         this.channel = channel;
         this.action = action;
