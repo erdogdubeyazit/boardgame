@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import tr.com.beb.boardgame.domain.application.GameService;
 import tr.com.beb.boardgame.domain.model.Player;
@@ -39,6 +40,10 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GameSession create(UserId userId, int pitCount, int itemsPerPit) {
+        Assert.notNull(userId, "Parameter `userId` must not be null");
+        Assert.isTrue(pitCount>0, "Parameter `pitCount` must not be greater than 0");
+        Assert.isTrue(itemsPerPit>0, "Parameter `itemsPerPit` must not be greater than 0");
+
         GameSessionEntity gameSessionEntity = new GameSessionEntity();
         gameSessionEntity.setPitCount(pitCount);
         gameSessionEntity.setItemsPerPit(itemsPerPit);
@@ -71,6 +76,10 @@ public class GameServiceImpl implements GameService {
     @Override
     public GameSession join(GameId gameId, UserId userId)
             throws IncompatibleGameStateException, NoSuchElementException, IllegalGameAccessException {
+
+        Assert.notNull(gameId, "Parameter `gameId` must not be null");
+        Assert.notNull(userId, "Parameter `userId` must not be null");
+
         GameSessionEntity gameSessionEntity = gameSessionRepository.findById(gameId.getValue())
                 .orElseThrow(() -> new NoSuchElementException("Game not found by id. Id:" + gameId.getValue()));
 
@@ -115,6 +124,10 @@ public class GameServiceImpl implements GameService {
     @Override
     public GameSession play(GameId gameId, UserId userId, int pitIndex) throws PitEmptyException,
             GameIsNotPlayableException, InvalidPitIndexException, GameNotFinishedYetException {
+
+        Assert.notNull(gameId, "Parameter `gameId` must not be null");
+        Assert.notNull(userId, "Parameter `userId` must not be null");
+        Assert.isTrue(pitIndex>=0, "Parameter `pitCount` must not be greater or equal to 0");
 
         GameSessionEntity gameSessionEntity = gameSessionRepository.findById(gameId.getValue())
                 .orElseThrow(() -> new NoSuchElementException("Game not found by id. Id:" + gameId.getValue()));
@@ -173,6 +186,9 @@ public class GameServiceImpl implements GameService {
     public GameSession cancel(GameId gameId, UserId userId)
             throws IncompatibleGameStateException, NoSuchElementException, IllegalGameAccessException {
 
+        Assert.notNull(gameId, "Parameter `gameId` must not be null");
+        Assert.notNull(userId, "Parameter `userId` must not be null");
+        
         GameSessionEntity gameSessionEntity = gameSessionRepository.findById(gameId.getValue())
                 .orElseThrow(() -> new NoSuchElementException("Game not found by id. Id:" + gameId.getValue()));
 
@@ -215,6 +231,10 @@ public class GameServiceImpl implements GameService {
     @Override
     public void leave(GameId gameId, UserId userId)
             throws IncompatibleGameStateException, NoSuchElementException, IllegalGameAccessException {
+
+        Assert.notNull(gameId, "Parameter `gameId` must not be null");
+        Assert.notNull(userId, "Parameter `userId` must not be null");
+
         GameSessionEntity gameSessionEntity = gameSessionRepository.findById(gameId.getValue())
                 .orElseThrow(() -> new NoSuchElementException("Game not found by id. Id:" + gameId.getValue()));
 
@@ -243,6 +263,9 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameSession> getMyGames(UserId userId) {
+
+        Assert.notNull(userId, "Parameter `userId` must not be null");
+
         return gameSessionRepository.getGamesCreatedByUserAndByStatusOrderByCreatedDateDesc(GameStatus.CREATED, userId.getValue()).stream()
                 .map(e -> new GameSession(
                     new GameId(e.getId()), 
@@ -267,6 +290,9 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameSession> getAvailableGamesByUser(UserId userId) {
+
+        Assert.notNull(userId, "Parameter `userId` must not be null");
+
         return gameSessionRepository.getGamesNotCreatedByUserAndByStatusOrderByCreatedDateDesc(GameStatus.CREATED, userId.getValue()).stream()
                 .map(e -> new GameSession(
                     new GameId(e.getId()), 
@@ -292,6 +318,9 @@ public class GameServiceImpl implements GameService {
     @Override
     public GameSession loadGame(GameId gameId, UserId userId) throws IncompatibleGameStateException,
             NoSuchElementException, IllegalGameAccessException, GameNotFinishedYetException {
+
+        Assert.notNull(gameId, "Parameter `gameId` must not be null");
+        Assert.notNull(userId, "Parameter `userId` must not be null");
 
         GameSessionEntity gameSessionEntity = gameSessionRepository.findById(gameId.getValue())
                 .orElseThrow(() -> new NoSuchElementException("Game not found by id. Id:" + gameId.getValue()));
@@ -341,6 +370,8 @@ public class GameServiceImpl implements GameService {
     @Override
     public List<GameSession> getActiveGamesByUser(UserId userId) {
         List<GameSessionEntity> gameSessionEntities = gameSessionRepository.getGamesRelatedByUserByStateOrderedByStartTimeDesc(GameStatus.STARTED, userId.getValue());
+        
+        Assert.notNull(userId, "Parameter `userId` must not be null");
 
         if(gameSessionEntities == null || (gameSessionEntities != null && gameSessionEntities.size()==0))
             return new ArrayList<GameSession>();
