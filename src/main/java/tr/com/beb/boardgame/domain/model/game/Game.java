@@ -64,7 +64,7 @@ public class Game {
         if (actualPit instanceof SimplePit && actualPit.getPlayer() == currentPlayer && actualPit.getItemCount() == 1)
             collectOwnAndOppositePitsIntoOwnTank(actualPitIndex);
 
-        if (playerOutOfItems(currentPlayer)) {
+        if (playerOutOfItems(currentPlayer) || playerOutOfItems(changePlayer(currentPlayer))) {
             closeGame();
         } else {
             currentPlayer = nextPlayer;
