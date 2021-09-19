@@ -1,0 +1,109 @@
+{
+  "logo": {
+    "tagLine": "Beyazit Board Games"
+  },
+  "header": {
+    "home": "Huis",
+    "signOut": "Afmelden",
+    "welcome": "Welkom"
+  },
+  "loginPage": {
+    "form": {
+      "username": {
+        "label": "Gebruikersnaam",
+        "required": "Gebruikersnaam is vereist"
+      },
+      "password": {
+        "label": "Wachtwoord",
+        "required": "Een wachtwoord is verplicht"
+      },
+      "submit": "Inloggen",
+      "noAccountYet": "Heb je geen account?",
+      "signUpHere": "Registreer hier"
+    }
+  },
+  "registerPage": {
+    "form": {
+      "username": {
+        "label": "Gebruikersnaam",
+        "required": "Gebruikersnaam is vereist",
+        "alphaNum": "Gebruikersnaam mag alleen letters en cijfers bevatten",
+        "minLength": "De gebruikersnaam moet minimaal {minLength} letters bevatten.",
+        "maxLength": "Gebruikersnaam is te lang. Het kan maximaal {maxLength} letters bevatten."
+      },
+      "name": {
+        "label": "Naam",
+        "required": "Naam is vereist",
+        "alpha": "Naam mag alleen letters bevatten",
+        "minLength": "Naam moet minimaal {minLength} letters hebben.",
+        "maxLength": "Naam is te lang. Het kan maximaal {maxLength} letters bevatten."
+      },
+      "surname": {
+        "label": "Achternaam",
+        "required": "Achternaam is verplicht",
+        "alpha": "Achternaam mag alleen letters bevatten",
+        "minLength": "Achternaam moet minimaal {minLength} letters bevatten.",
+        "maxLength": "Achternaam is te lang. Het kan maximaal {maxLength} letters bevatten."
+      },
+      "password": {
+        "label": "Wachtwoord",
+        "required": "Een wachtwoord is verplicht",
+        "minLength": "Password must be at least {minLength} characters.",
+        "maxLength": "Wachtwoord moet minimaal {minLength} tekens bevatten."
+      },
+      "submit": "Maak een account aan",
+      "alreadyHaveAccount": "Heb je al een account?",
+      "signIn": "Inloggen"
+    }
+  },
+  "homePage": {
+    "activeGames": "Actieve spellen",
+    "availableGames": "Beschikbare spellen",
+    "myGames": "Mijn spellen",
+    "createNewGame": "Nieuw spel maken",
+    "continueGame": "Doorgaan met spel",
+    "pitCount": "Puttelling",
+    "itemsPerPit": "Aantal items in een put",
+    "createGame": "Nieuw spel maken",
+    "join": "Meedoen",
+    "cancel": "Annuleren",
+    "noGames": "Geen spelletjes",
+    "createModal": {
+      "title": "Spel maken",
+      "save": "Opslaan",
+      "cancel": "Annuleren",
+      "pitCount": {
+        "label": "Kuiltelling",
+        "required": "Pittelling is vereist",
+        "minValue": "Het aantal pits moet minimaal {minValue} zijn."
+      },
+      "itemsPerPit": {
+        "label": "Aantal items in een put",
+        "required": "Aantal items voor pits is vereist",
+        "minValue": "Het aantal artikelen voor pits moet minimaal {minValue} zijn."
+      }
+    }
+  },
+  "gameScenePage": {
+    "infoMessages": {
+      "genericErrorMessage":"Gamescène kan niet worden geladen",
+      "ownTurn": "Jouw beurt",
+      "opponentTurn": "Aan de beurt van de tegenstander",
+      "youWon": "Gefeliciteerd! Je hebt het spel gewonnen. Punten behaald : {pint}.",
+      "youLost": "Spel compleet. Je hebt het spel verloren",
+      "tie": "Wedstrijd afgesloten met gelijkspel"
+    },
+    "quit": "Ontslag nemen"
+  },
+  "error": {
+    "request": {
+      "bad": "Foutief verzoek",
+      "notAuthorized": "Verzoek niet geautoriseerd.",
+      "forbidden": "Verzoek verboden.",
+      "notFound": "Verzoek mislukt. Verzoek eindpunt niet gevonden op de server.",
+      "unknownServerError": "Er is een fout aan de serverkant. Probeer het later opnieuw.",
+      "failed": "Verzoek mislukt. Probeer het later opnieuw.",
+      "noResponse": "Verzoek mislukt. Geen reactie van de server."
+    }
+  }
+}
