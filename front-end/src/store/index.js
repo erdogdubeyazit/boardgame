@@ -1,15 +1,28 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as getters from './getters'
+import * as actions from './actions'
+import mutations from './mutations'
+import createLogger from 'vuex/dist/logger'
 
 Vue.use(Vuex)
 
+const state = {
+  user: {
+    name: null,
+    authenticated: false
+  },
+  myGames: [/* {gameId, playerA, pitCount, itemsPerPit, sortingReference} */],
+  availableGames: [/* {gameId, playerA, pitCount, itemsPerPit, sortingReference} */],
+  activeGames: [/* {gameId, pitCount, itemsPerPit, sortingReference} */]
+}
+
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+  state,
+  getters,
+  actions,
+  mutations,
+  plugins: process.env.NODE_ENV !== 'production'
+    ? [createLogger()]
+    : []
 })

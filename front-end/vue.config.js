@@ -5,7 +5,7 @@ module.exports = {
       '/api/*': {
         target: 'http://localhost:8080'
       },
-      '/rt/*': {
+      '/wsc/*': {
         target: 'http://localhost:8080'
       }
     }
@@ -14,7 +14,9 @@ module.exports = {
     entry: {
       app: './src/main.js',
       style: [
-        'bootstrap/dist/css/bootstrap.min.css'
+        'bootstrap/dist/css/bootstrap.min.css',
+        'noty/lib/noty.css',
+        'noty/lib/themes/relax.css'
       ]
     }
   }

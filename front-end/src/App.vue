@@ -1,17 +1,17 @@
 <template>
-  <div id="app">
+  <div id="app" class="h-100">
     <router-view/>
   </div>
 </template>
 
 <script>
 import 'bootstrap/dist/js/bootstrap.min'
-
 export default {
   name: 'App',
   created () {
+    // initialize websocket client
     this.$bus.$on('myDataFetched', myData => {
-      this.$rt.init(myData.settings.webSocketServerUrl, myData.user.token)
+      this.$webSocketClient.init(myData.settings.webSocketServerUrl, myData.user.token)
     })
   }
 }
@@ -27,4 +27,3 @@ html, body {
   }
 }
 </style>
- 
