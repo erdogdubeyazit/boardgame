@@ -369,9 +369,10 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameSession> getActiveGamesByUser(UserId userId) {
+        Assert.notNull(userId, "Parameter `userId` must not be null");
+        
         List<GameSessionEntity> gameSessionEntities = gameSessionRepository.getGamesRelatedByUserByStateOrderedByStartTimeDesc(GameStatus.STARTED, userId.getValue());
         
-        Assert.notNull(userId, "Parameter `userId` must not be null");
 
         if(gameSessionEntities == null || (gameSessionEntities != null && gameSessionEntities.size()==0))
             return new ArrayList<GameSession>();
