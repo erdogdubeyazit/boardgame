@@ -2,12 +2,17 @@
   <div class="logo-wrapper">
     <img class="logo" src="/images/logo.png" />
     <div class="tagline">{{ $t("logo.tagLine") }}</div>
+    <LanguageSelector />
   </div>
 </template>
 
 <script>
+import LanguageSelector from './LanguageSelector.vue'
 export default {
-  name: 'Logo'
+  name: 'Logo',
+  components: {
+    LanguageSelector
+  }
 }
 </script>
 
@@ -15,15 +20,12 @@ export default {
 .logo-wrapper {
   text-align: center;
   margin-bottom: 40px;
-
   .tagline {
-    line-height: 180%;
     color: #666;
   }
-
   .logo {
-    max-width: 150px;
-    margin: 0 auto;
+    max-width: 300px;
+    margin: auto;
   }
 }
 </style>

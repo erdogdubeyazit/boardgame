@@ -9,7 +9,7 @@
           </div>
           <div class="form-group">
             <label for="username">{{
-              $t("loginPage.form.emailAddress.label")
+              $t("loginPage.form.username.label")
             }}</label>
             <input
               type="text"
@@ -19,7 +19,7 @@
             />
             <div class="field-error" v-if="$v.form.username.$dirty">
               <div class="error" v-if="!$v.form.username.required">
-                {{ $t("loginPage.form.emailAddress.required") }}
+                {{ $t("loginPage.form.username.required") }}
               </div>
             </div>
           </div>
@@ -39,7 +39,8 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary btn-block">
+          <br />
+          <button type="submit" class="btn btn-primary w-100">
             {{ $t("loginPage.form.submit") }}
           </button>
           <div class="links">
@@ -53,7 +54,6 @@
         </form>
       </div>
     </div>
-    <PageFooter />
   </div>
 </template>
 
@@ -63,7 +63,7 @@ import authenticationService from '@/services/authentication'
 import Logo from '@/components/Logo.vue'
 
 export default {
-  name: 'LoginPage',
+  name: 'Login',
   data: function () {
     return {
       form: {
@@ -108,6 +108,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.public.container {
+  max-width: 900px;
+}
+input.form-control:focus,
+textarea.form-control:focus {
+  border: 1px solid #377EF6 !important;
+}
+.public {
+  .form {
+    margin-top: 50px;
+    width: 320px;
+
+    .form-group {
+      label {
+        font-weight: bold;
+        color: #555;
+      }
+
+      .error {
+        line-height: 1;
+        margin-top: 5px;
+      }
+    }
+  }
+}
 .links {
   margin: 30px 0 50px 0;
   text-align: center;

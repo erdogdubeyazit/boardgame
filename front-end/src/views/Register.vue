@@ -8,26 +8,33 @@
             {{ errorMessage }}
           </div>
           <div class="form-group">
-            <label for="emailAddress">{{
-              $t("registerPage.form.emailAddress.label")
+            <label for="username">{{
+              $t("registerPage.form.username.label")
             }}</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
-              id="emailAddress"
-              v-model="form.emailAddress"
+              id="username"
+              v-model="form.username"
             />
-            <div class="field-error" v-if="$v.form.emailAddress.$dirty">
-              <div class="error" v-if="!$v.form.emailAddress.required">
-                {{ $t("registerPage.form.emailAddress.required") }}
+            <div class="field-error" v-if="$v.form.username.$dirty">
+              <div class="error" v-if="!$v.form.username.required">
+                {{ $t("registerPage.form.username.required") }}
               </div>
-              <div class="error" v-if="!$v.form.emailAddress.email">
-                {{ $t("registerPage.form.emailAddress.email") }}
+              <div class="error" v-if="!$v.form.username.alphaNum">
+                {{ $t("registerPage.form.username.alphaNum") }}
               </div>
-              <div class="error" v-if="!$v.form.emailAddress.maxLength">
+              <div class="error" v-if="!$v.form.username.minLength">
                 {{
-                  $t("registerPage.form.emailAddress.maxLength", {
-                    maxLength: $v.form.emailAddress.$params.maxLength.max,
+                  $t("registerPage.form.username.minLength", {
+                    minLength: $v.form.username.$params.minLength.min,
+                  })
+                }}
+              </div>
+              <div class="error" v-if="!$v.form.username.maxLength">
+                {{
+                  $t("registerPage.form.username.maxLength", {
+                    maxLength: $v.form.username.$params.maxLength.max,
                   })
                 }}
               </div>
@@ -127,10 +134,11 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary btn-block">
+          <br />
+          <button type="submit" class="form-control btn btn-primary w-100">
             {{ $t("registerPage.form.submit") }}
           </button>
-          <p class="text-center text-muted">
+          <p class="links text-center text-muted">
             {{ $t("registerPage.form.alreadyHaveAccount") }}
             <router-link to="login">{{
               $t("registerPage.form.signIn")
@@ -145,9 +153,9 @@
 <script>
 import {
   required,
-  email,
   minLength,
   maxLength,
+  alphaNum,
   alpha
 } from 'vuelidate/lib/validators'
 import registrationService from '@/services/registration'
@@ -158,7 +166,7 @@ export default {
   data: function () {
     return {
       form: {
-        emailAddress: '',
+        username: '',
         name: '',
         surname: '',
         password: ''
@@ -171,21 +179,22 @@ export default {
   },
   validations: {
     form: {
-      emailAddress: {
+      username: {
         required,
-        email,
-        maxLength: maxLength(100)
+        minLength: minLength(2),
+        maxLength: maxLength(50),
+        alphaNum
       },
       name: {
         required,
         minLength: minLength(1),
-        maxLength: maxLength(45),
+        maxLength: maxLength(50),
         alpha
       },
       surname: {
         required,
         minLength: minLength(1),
-        maxLength: maxLength(45),
+        maxLength: maxLength(50),
         alpha
       },
       password: {
@@ -214,3 +223,36 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.public.container {
+  max-width: 900px;
+}
+
+input.form-control:focus,
+textarea.form-control:focus {
+  border: 1px solid #377ef6 !important;
+}
+.public {
+  .form {
+    margin-top: 50px;
+    width: 320px;
+
+    .form-group {
+      label {
+        font-weight: bold;
+        color: #555;
+      }
+
+      .error {
+        line-height: 1;
+        margin-top: 5px;
+      }
+    }
+  }
+}
+.links {
+  margin: 30px 0 50px 0;
+  text-align: center;
+}
+</style>
