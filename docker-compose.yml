@@ -1,0 +1,21 @@
+version: '3.7'
+
+services: 
+    api:
+        image: 'boardgame-springboot-mongo:latest'
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        container_name: boardgame
+        depends_on: 
+            - db
+        environment: 
+            - SPRING_DATA_MONGODB_HOST=db
+            - SPRING_DATA_MONGODB_PORT=27017
+            - SPRING_DATA_MONGODB_DATABASE=boardgame
+        ports:
+            - "8080:8080"
+    db:
+        image: 'mongo'
+        ports:
+            - "27017:27017"
