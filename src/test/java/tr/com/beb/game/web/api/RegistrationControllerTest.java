@@ -71,7 +71,7 @@ public class RegistrationControllerTest {
         registrationPayload.getName(), registrationPayload.getSurname());
 
     mockMvc.perform(post("/api/registrations").contentType(MediaType.APPLICATION_JSON)
-        .content(JsonUtils.toJson(registrationPayload))).andExpect(status().isOk());
+        .content(JsonUtils.toJson(registrationPayload))).andExpect(status().isCreated());
   }
 
 }
