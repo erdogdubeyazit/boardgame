@@ -1,6 +1,6 @@
 # Board Game Web Application
 
-Demo Mangala/Khala like web application.
+Demo Mancala/Kalaha like web application.
 
 ## Installation
 Application uses 8080 port. It can be configured in "application.properties" file.
