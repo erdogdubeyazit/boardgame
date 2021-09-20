@@ -20,10 +20,6 @@
 		<commons-io.version>2.11.0</commons-io.version>
 	</properties>
 	<dependencies>
-		<!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -122,9 +118,6 @@
 						<goals>
 							<goal>start</goal>
 						</goals>
-						<!-- <configuration>
-							<fork>true</fork>
-						</configuration> -->
 					</execution>
 					<execution>
 						<id>post-integration-test</id>
@@ -152,20 +145,6 @@
 							</arguments>
 						</configuration>
 					</execution>
-					<!-- <execution>
-						<id>front-end unit test</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<phase>prepare-package</phase>
-						<configuration>
-							<executable>npm</executable>
-							<arguments>
-								<argument>run</argument>
-								<argument>test:unit</argument>
-							</arguments>
-						</configuration>
-					</execution> -->
 					<execution>
 						<id>front-end-lint</id>
 						<goals>
@@ -195,20 +174,6 @@
 							</arguments>
 						</configuration>
 					</execution>
-					<!-- <execution>
-						<id>front-end e2e test</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<phase>integration-test</phase>
-						<configuration>
-							<executable>npm</executable>
-							<arguments>
-								<argument>run</argument>
-								<argument>test:integration</argument>
-							</arguments>
-						</configuration>
-					</execution> -->
 				</executions>
 				<configuration>
 					<workingDirectory>${basedir}/front-end</workingDirectory>
